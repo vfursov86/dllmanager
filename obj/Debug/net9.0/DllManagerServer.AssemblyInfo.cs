@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DllManagerServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b3aac264357b3174a33faa0cdfa986bfbe4ffca")]
 [assembly: System.Reflection.AssemblyProductAttribute("DllManagerServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DllManagerServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

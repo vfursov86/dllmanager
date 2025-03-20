@@ -95,3 +95,4 @@ D:\Code\DllManagerServer\obj\Debug\net9.0\refint\DllManagerServer.dll
 D:\Code\DllManagerServer\obj\Debug\net9.0\DllManagerServer.pdb
 D:\Code\DllManagerServer\obj\Debug\net9.0\DllManagerServer.genruntimeconfig.cache
 D:\Code\DllManagerServer\obj\Debug\net9.0\ref\DllManagerServer.dll
+D:\Code\DllManagerServer\obj\Debug\net9.0\DllManagerServer.sourcelink.json

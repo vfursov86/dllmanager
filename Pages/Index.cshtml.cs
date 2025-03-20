@@ -43,8 +43,8 @@ public class IndexModel : PageModel
 
         dllsFromSession.Add(new DllInfo
         {
-            Name = System.IO.Path.GetFileName(dllPath),
-            Path = dllPath,
+            Name = Path.GetFileName(dllPath),
+            Path = Path.GetFullPath(dllPath).ToLowerInvariant(),
             IsRunning = false
         });
 
@@ -55,6 +55,10 @@ public class IndexModel : PageModel
 
     public IActionResult OnPostStart(string path)
     {
+
+        // Load the DLLs from the session
+        Dlls = HttpContext.Session.Get<List<DllInfo>>("Dlls") ?? new List<DllInfo>();
+
         string error;
         if (!_dllManagerService.StartDll(path, Dlls, out error))
         {
@@ -62,11 +66,19 @@ public class IndexModel : PageModel
             var dll = Dlls.FirstOrDefault(d => d.Path == path);
             if (dll != null) dll.ProblemDetails = error;
         }
+
+        // Save the updated DLLs back to the session
+        HttpContext.Session.Set("Dlls", Dlls);
+
         return RedirectToPage();
     }
 
     public IActionResult OnPostStop(string path)
     {
+
+        // Load the DLLs from the session
+        Dlls = HttpContext.Session.Get<List<DllInfo>>("Dlls") ?? new List<DllInfo>();
+
         string error;
         if (!_dllManagerService.StopDll(path, out error))
         {
@@ -74,6 +86,9 @@ public class IndexModel : PageModel
             var dll = Dlls.FirstOrDefault(d => d.Path == path);
             if (dll != null) dll.ProblemDetails = error;
         }
+
+        // Save the updated DLLs back to the session
+        HttpContext.Session.Set("Dlls", Dlls);
         return RedirectToPage();
     }
 

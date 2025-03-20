@@ -27,17 +27,17 @@ public class DllManagerService
             };
 
             process.OutputDataReceived += (sender, e) =>
-        {
-            if (!string.IsNullOrEmpty(e.Data))
             {
-                // Append output to the DLL's log output
-                var dll = dlls.FirstOrDefault(d => d.Path == dllPath);
-                if (dll != null)
+                if (!string.IsNullOrEmpty(e.Data))
                 {
-                    dll.LogOutput += $"{e.Data}\n";
+                    // Append output to the DLL's log output
+                    var dll = dlls.FirstOrDefault(d => d.Path == dllPath);
+                    if (dll != null)
+                    {
+                        dll.LogOutput += $"{e.Data}\n";
+                    }
                 }
-            }
-        };
+            };
 
             process.ErrorDataReceived += (sender, e) =>
             {
@@ -59,13 +59,26 @@ public class DllManagerService
             _runningProcesses[dllPath] = process;
 
             // Update the DLL info with port information
-            
 
-            var runningDllInfo = dlls.FirstOrDefault(d => d.Path == dllPath);
-            if (runningDllInfo != null)
+
+            var normalizedDllPath = Path.GetFullPath(dllPath).ToLowerInvariant();
+            var runningDllInfo = dlls.FirstOrDefault(d => Path.GetFullPath(d.Path).ToLowerInvariant() == normalizedDllPath);
+
+            if (runningDllInfo == null)
+            {
+                Console.WriteLine($"No matching DLL found for path: {dllPath}");
+            }
+            else
             {
                 runningDllInfo.LogOutput += $"Application started at http://localhost:{port}\n";
             }
+
+            Console.WriteLine("DLLs in list:");
+            foreach (var dll in dlls)
+            {
+                Console.WriteLine($"- {dll.Path}");
+            }
+            Console.WriteLine($"Starting DLL: {dllPath}");
 
             return true;
         }
